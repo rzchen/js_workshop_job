@@ -79,3 +79,6 @@ $ npx http-server .
   - 請使用[rack-cors](https://github.com/cyu/rack-cors) 來設定 CORS
   - allow origin 請設定自己的 github page 就好
 
+最後網址：https://rzchen.github.io/js_workshop_job/index.html
+## 專案準備以及提交方式：
+## 專案準備以及提交方式
