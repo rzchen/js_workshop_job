@@ -52,10 +52,6 @@ window.addEventListener('DOMContentLoaded', function() {
     fetch(`https://still-spire-37210.herokuapp.com/positions.json?description=${des}&location=${loc}&full_time=${full_time}&page=${counter}`)
     .then(response => response.json())
     .then(job => {
-
-      
-      console.log(job.length)
-
       job.forEach(element => {
         let template = document.querySelector("template")
     
@@ -78,6 +74,7 @@ window.addEventListener('DOMContentLoaded', function() {
         const clone = document.importNode(template.content, true)
       
         // console.log(clone)
+
         outTable.appendChild(clone)
 
         if (job.length === 50){
@@ -95,10 +92,6 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
 })
-
-
-
-
 // company: "momox GmbH"
 // company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcGFJIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8788b29b238caec344b3aafefb84da2656fbd34a/momox_logo.png"
 // company_url: "http://momox.biz/en/career/"
