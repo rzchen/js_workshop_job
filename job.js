@@ -1,12 +1,24 @@
 window.addEventListener('DOMContentLoaded', function() {
   const form = document.forms[0];
+  const searchBtn = document.querySelector('.button')
+  let pannel = document.querySelector('#job-pannel')
+  let counter = 1
+  let des, loc, full_time;
   
+  // searchBtn.addEventListener('click', function() {
+  //   pannel.innerHTML = ''
+  // })
 
   form.addEventListener('submit', function(e) {
+    e.preventDefault()
+    pannel.innerHTML = ''
     
-    const des = form.elements['description'].value
-    const loc = form.elements['location'].value
-    let full_time = form.elements['full_time'].checked
+    
+    counter = 1
+    des = form.elements['description'].value
+    loc = form.elements['location'].value
+    full_time = form.elements['full_time'].checked
+    
 
     if (full_time) {
       full_time = 'on'
@@ -14,14 +26,32 @@ window.addEventListener('DOMContentLoaded', function() {
       full_time = ''
     }
 
-    let url = `https://still-spire-37210.herokuapp.com/positions.json?description=${des}&location=${loc}&full_time=${full_time}`
+    // var url = 
     
-    console.log(url)
+    // console.log(url)
     
-    fetch(url)
+    fetchJob()
+    
+
+    
+  })
+  const btn = document.querySelector('.pagination-next')
+  btn.addEventListener('click', function() {
+    counter = counter + 1
+    fetchJob()
+
+
+    
+
+
+  })
+
+  
+
+  function fetchJob(params) {
+    fetch(`https://still-spire-37210.herokuapp.com/positions.json?description=${des}&location=${loc}&full_time=${full_time}&page=${counter}`)
     .then(response => response.json())
     .then(job => {
-      console.log(job)
       job.forEach(element => {
         let template = document.querySelector("template")
     
@@ -44,15 +74,24 @@ window.addEventListener('DOMContentLoaded', function() {
         const clone = document.importNode(template.content, true)
       
         // console.log(clone)
-        outTable.prepend(clone)
+
+        outTable.appendChild(clone)
+
+        if (job.length === 50){
+          document.querySelector('.pagination-next').removeAttribute('disabled')
+        } else {
+          document.querySelector('.pagination-next').setAttribute('disabled', 'true')
+        }
       });
 
       
-      })
+    })
 
-  })
+
+
+  }
+
 })
-
 // company: "momox GmbH"
 // company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcGFJIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8788b29b238caec344b3aafefb84da2656fbd34a/momox_logo.png"
 // company_url: "http://momox.biz/en/career/"
